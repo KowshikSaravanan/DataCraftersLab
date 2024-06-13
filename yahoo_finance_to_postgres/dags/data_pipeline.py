@@ -16,7 +16,7 @@ logger = logging.getLogger(__name__)
 DB_NAME = os.getenv('DB_NAME', 'dbt')
 DB_USER = os.getenv('DB_USER', 'dbt')
 DB_PASSWORD = os.getenv('DB_PASSWORD', 'dbt')
-DB_HOST = os.getenv('DB_HOST', '172.31.209.62')
+DB_HOST = os.getenv('DB_HOST', '<ip_address>')
 DB_PORT = os.getenv('DB_PORT', '5432')
 
 # Default arguments for the DAG
