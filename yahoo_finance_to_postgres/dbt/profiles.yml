@@ -1,0 +1,12 @@
+yahoo_finance:
+  outputs:
+    dev:
+      dbname: dbt
+      host: localhost
+      pass: dbt
+      port: 5432
+      schema: public
+      threads: 4
+      type: postgres
+      user: dbt
+  target: dev
