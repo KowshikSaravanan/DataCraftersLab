@@ -43,48 +43,20 @@ The gold layer provides aggregated data for high-level insights and anomaly dete
 
 By structuring the DBT project into these layers, we ensure a clear separation of concerns, making the data pipeline more maintainable, scalable, and easier to understand.
 
-## Environment Variables
+### Machine Learning
 
-Before running the DAG, ensure you have the following environment variables set for database credentials:
+1. **Fetching Data**: The DAG starts by fetching data from a PostgreSQL database table named `stock_data_gold`.
 
-- `DB_NAME`: PostgreSQL database name 
-- `DB_USER`: PostgreSQL user 
-- `DB_PASSWORD`: PostgreSQL password 
-- `DB_HOST`: PostgreSQL host
-- `DB_PORT`: PostgreSQL port
+2. **Data Preprocessing**: The fetched data is preprocessed, including converting the 'date' column to a datetime object and setting it as the index.
 
-## Installation
+3. **Feature Engineering**: For each unique symbol in the data, a linear regression model is trained using the 'day' as a feature and the 'close' price as the target variable.
 
-1. Clone the repository:
-    ```sh
-    git clone https://github.com/your-username/your-repo-name.git
-    cd your-repo-name
-    ```
+4. **Prediction**: Future close prices are predicted for the next 30 days using the trained linear regression model.
 
-2. Create a virtual environment and activate it:
-    ```sh
-    python3 -m venv airflow-venv
-    source airflow-venv/bin/activate
-    ```
+5. **Saving Predictions**: The predicted future prices along with their corresponding dates and symbols are saved to a PostgreSQL table named `future_predictions`.
 
-3. Install the required Python packages:
-    ```sh
-    pip install -r requirements.txt
-    ```
+6. **Error Handling**: If an error occurs during any step, the task is retried once.
 
-4. Set up Airflow:
-    ```sh
-    export AIRFLOW_HOME=$(pwd)/airflow
-    airflow db init
-    ```
+7. **Airflow Integration**: The DAG is designed to be run in Apache Airflow, a platform for programmatically authoring, scheduling, and monitoring workflows.
 
-## Configuration
-
-Ensure that the required environment variables are set. You can add them to your shell profile or export them directly in your terminal session:
-
-```sh
-export DB_NAME='your_db_name'
-export DB_USER='your_db_user'
-export DB_PASSWORD='your_db_password'
-export DB_HOST='your_db_host'
-export DB_PORT='your_db_port'
+This summary highlights the main steps and objectives of the prediction DAG, focusing on data processing, model training, prediction, and result storage.
