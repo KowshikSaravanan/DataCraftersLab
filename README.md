@@ -1,4 +1,4 @@
-# Yahoo Finance to PostgreSQL Data Pipeline
+# Yahoo Finance Data Warehouse
 
 This project contains an Apache Airflow DAG for extracting stock data from Yahoo Finance and storing it in a PostgreSQL database. The pipeline is designed to be modular, maintainable, and production-ready, following best practices for configuration management, logging, and error handling.
 
